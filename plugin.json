@@ -1,0 +1,9 @@
+{
+  "name": "ElasticExportSchuheDE",
+  "description": "This plugin adds the format SchuheDE to the Elastic Export.",
+  "namespace": "ElasticExportSchuheDE",
+  "author": "plentymarkets",
+  "type": "export",
+  "serviceProvider": "ElasticExportSchuheDE\\ElasticExportSchuheDEServiceProvider",
+  "version": 0.1
+}
