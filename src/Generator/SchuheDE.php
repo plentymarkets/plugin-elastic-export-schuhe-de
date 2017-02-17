@@ -170,7 +170,7 @@ class SchuheDE extends CSVGenerator
 
                 $basePriceList = $this->elasticExportCoreHelper->getBasePriceList($variation, (float) $this->idlVariations[$variation['id']]['variationRetailPrice.price'], $settings->get('lang'));
 
-                $deliveryCost = $this->elasticExportCoreHelper->getShippingCost($variation, $settings);
+                $deliveryCost = $this->elasticExportCoreHelper->getShippingCost($variation['data']['item']['id'], $settings);
                 if(!is_null($deliveryCost))
                 {
                     $deliveryCost = number_format((float)$deliveryCost, 2, '.', '');
