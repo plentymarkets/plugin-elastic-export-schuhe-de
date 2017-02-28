@@ -2,8 +2,8 @@
 
 namespace ElasticExportSchuheDE\Generator;
 
-use ElasticExportCore\Helper\ElasticExportCoreHelper;
-use Plenty\Modules\DataExchange\Contracts\CSVGenerator;
+use ElasticExport\Helper\ElasticExportCoreHelper;
+use Plenty\Modules\DataExchange\Contracts\CSVPluginGenerator;
 use Plenty\Modules\Helper\Services\ArrayHelper;
 use Plenty\Modules\Item\DataLayer\Models\Record;
 use Plenty\Modules\Item\DataLayer\Models\RecordList;
@@ -18,7 +18,7 @@ use Plenty\Modules\Item\Property\Models\PropertySelection;
  * Class SchuheDE
  * @package ElasticExportSchuheDE\Generator
  */
-class SchuheDE extends CSVGenerator
+class SchuheDE extends CSVPluginGenerator
 {
     const SCHUHE_DE = 141.00;
 
@@ -61,19 +61,16 @@ class SchuheDE extends CSVGenerator
     /**
      * SchuheDE constructor.
      *
-     * @param ElasticExportCoreHelper $elasticExportCoreHelper
      * @param ArrayHelper $arrayHelper
      * @param AttributeValueNameRepositoryContract $attributeValueNameRepository
      * @param PropertySelectionRepositoryContract $propertySelectionRepository
      */
     public function __construct(
-        ElasticExportCoreHelper $elasticExportCoreHelper,
         ArrayHelper $arrayHelper,
         AttributeValueNameRepositoryContract $attributeValueNameRepository,
         PropertySelectionRepositoryContract $propertySelectionRepository
     )
     {
-        $this->elasticExportCoreHelper = $elasticExportCoreHelper;
         $this->arrayHelper = $arrayHelper;
         $this->attributeValueNameRepository = $attributeValueNameRepository;
         $this->propertySelectionRepository = $propertySelectionRepository;
@@ -84,9 +81,12 @@ class SchuheDE extends CSVGenerator
      *
      * @param array $resultData
      * @param array $formatSettings
+     * @param array $filter
      */
-    protected function generateContent($resultData, array $formatSettings = [])
+    protected function generatePluginContent($resultData, array $formatSettings = [], array $filter = [])
     {
+        $this->elasticExportCoreHelper = pluginApp(ElasticExportCoreHelper::class);
+
         if(is_array($resultData) && count($resultData['documents']) > 0)
         {
             $settings = $this->arrayHelper->buildMapFromObjectList($formatSettings, 'key', 'value');
@@ -143,7 +143,7 @@ class SchuheDE extends CSVGenerator
             ]);
 
             //Generates a RecordList form the ItemDataLayer for the given variations
-            $idlResultList = $this->generateIdlList($resultData, $settings);
+            $idlResultList = $this->generateIdlList($resultData, $settings, $filter);
 
             //Creates an array with the variationId as key to surpass the sorting problem
             if(isset($idlResultList) && $idlResultList instanceof RecordList)
@@ -269,7 +269,7 @@ class SchuheDE extends CSVGenerator
      */
     private function getItemPropertyList($variation):array
     {
-        if(!array_key_exists($variation['item']['id'], $this->itemPropertyCache))
+        if(!array_key_exists($variation['data']['item']['id'], $this->itemPropertyCache))
         {
             $characterMarketComponentList = $this->elasticExportCoreHelper->getItemCharactersByComponent($this->idlVariations[$variation['id']], self::SCHUHE_DE);
 
@@ -298,10 +298,10 @@ class SchuheDE extends CSVGenerator
                 }
             }
 
-            $this->itemPropertyCache[$variation['item']['id']] = $list;
+            $this->itemPropertyCache[$variation['data']['item']['id']] = $list;
         }
 
-        return $this->itemPropertyCache[$variation['item']['id']];
+        return $this->itemPropertyCache[$variation['data']['item']['id']];
     }
 
     /**
@@ -492,9 +492,10 @@ class SchuheDE extends CSVGenerator
      *
      * @param array     $resultData
      * @param KeyValue  $settings
+     * @param array     $filter
      * @return RecordList|string
      */
-    private function generateIdlList($resultData, $settings)
+    private function generateIdlList($resultData, $settings, $filter)
     {
         //Create a List of all VariationIds
         $variationIdList = array();
@@ -512,7 +513,7 @@ class SchuheDE extends CSVGenerator
             $idlResultList = pluginApp(\ElasticExportSchuheDE\IDL_ResultList\SchuheDE::class);
 
             //Return the list of results for the given variation ids
-            return $idlResultList->getResultList($variationIdList, $settings);
+            return $idlResultList->getResultList($variationIdList, $settings, $filter);
         }
 
         return '';
