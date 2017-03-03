@@ -9,7 +9,7 @@
   "description": "This plugin adds the format Schuhe.de to the Elastic Export.",
   "shortDescription": {
     "de": "Das Plugin ElasticExportSchuheDE fügt das Datenformat Schuhe.de zum Elastischen Export hinzu.",
-    "en": "This plugin adds the format Schuhe.de to the Elastic Export."
+    "en": "This plugin adds the format SchuheDE-Plugin to the Elastic Export."
   },
   "categories": [
     "3523"
