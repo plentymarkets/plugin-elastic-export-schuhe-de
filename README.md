@@ -1,8 +1,8 @@
 ![plentymarkets Logo](http://www.plentymarkets.eu/layout/pm/images/logo/plentymarkets-logo.jpg)
 
-# Elastic Export Schuhe.de Plugin for plentymarkets 7
+# ElasticExportSchuheDE plugin for plentymarkets 7
 
-This is the elastic export Schuhe.de plugin for plentymarkets 7 which extends the list of possible export formats.
+This is the ElasticExportSchuheDE plugin for plentymarkets 7 which extends the list of possible export formats.
 The elastic export is used to create export formats for price search engines, price comparison portals, markets and affiliate service providers.
 For further information about export formats see our [online manual](https://www.plentymarkets.co.uk/manual/data-exchange/data-formats/).
 
