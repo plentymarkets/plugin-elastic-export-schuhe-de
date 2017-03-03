@@ -1,4 +1,4 @@
-plentymarkets plugin Elastic Export Schuhe.de
+plentymarkets plugin ElasticExportSchuheDE
 
 Copyright © 2016 plentymarkets GmbH
 
