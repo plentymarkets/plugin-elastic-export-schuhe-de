@@ -11,7 +11,7 @@ Schuhe.de ist eine Online-Plattform der ANWR Group, die Online-Shops und die rea
 
 Um dieses Format nutzen zu können, benötigen Sie das Plugin Elastic Export.
 
-Nachdem Sie das EElasticExportSchuheDE Plugin im plentyMarketplace gekauft haben, richten Sie das Exportformat wie auf der Handbuchseite [Daten exportieren](https://www.plentymarkets.eu/handbuch/datenaustausch/daten-exportieren/#4) beschrieben ein.
+Nachdem Sie das ElasticExportSchuheDE Plugin im plentyMarketplace gekauft haben, richten Sie das Exportformat wie auf der Handbuchseite [Daten exportieren](https://www.plentymarkets.eu/handbuch/datenaustausch/daten-exportieren/#4) beschrieben ein.
 
 ## Lizenz
 
