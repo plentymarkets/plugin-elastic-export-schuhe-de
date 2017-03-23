@@ -434,19 +434,21 @@ class SchuheDE extends CSVPluginGenerator
      */
     private function getCategories($variation, KeyValue $settings):string
     {
-        $list = [];
+        $categoryList = [];
 
-        foreach($variation['data']['categories']['all'] as $categoryId)
+        // go though the list of the category details
+        foreach($variation['data']['categories']['details'] as $category)
         {
-            $category = $this->elasticExportCoreHelper->getCategory((int)$categoryId, $settings->get('lang'), $settings->get('plentyId'));
+            // pass the category id to construct the category path
+            $category = $this->elasticExportCoreHelper->getCategory((int)$category['id'], $settings->get('lang'), $settings->get('plentyId'));
 
             if(strlen($category))
             {
-                $list[] = $category;
+                $categoryList[] = $category;
             }
         }
 
-        return implode(';', $list);
+        return implode(';', $categoryList);
     }
 
     /**
