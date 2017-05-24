@@ -145,8 +145,7 @@ class SchuheDE extends ResultFields
                 'defaultCategories.id',
 
                 //allCategories
-                'categories.paths',
-                'categories.details',
+                'categories.all',
 
                 //barcodes
                 'barcodes.code',
