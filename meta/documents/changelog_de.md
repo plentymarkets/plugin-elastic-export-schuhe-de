@@ -1,9 +1,9 @@
 # Release Notes für Elastic Export Schuhe.de
 
-## v1.0.3 (2017-05-24)
+## v1.0.3 (2017-05-26)
 
 ### Geändert
-- Das Plugin Elastic Export ist nun Voraussetzung zur Nutzung des Pluginformats Schuhe.de.
+- Das Plugin Elastic Export ist nun Voraussetzung zur Nutzung des Pluginformats SchuheDE.
 
 ## v1.0.2 (2017-03-23)
 
