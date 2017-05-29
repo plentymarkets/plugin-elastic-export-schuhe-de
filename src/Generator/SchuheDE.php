@@ -205,7 +205,7 @@ class SchuheDE extends CSVPluginGenerator
                     'reduzierter Preis'             => number_format((float)$price, 2, '.', ''),
                     'Grundpreis'                    => $this->elasticExportCoreHelper->getBasePrice($variation, $this->idlVariations[$variation['id']], $settings->get('lang')),
                     'Grundpreis Einheit'            => $basePriceList['lot'],
-                    'Kategorien'                    => $this->getCategories($variation, $settings),
+                    'Kategorien'                    => $this->elasticExportCoreHelper->getCategory((int)$variation['data']['defaultCategories'][0]['id'], $settings->get('lang'), $settings->get('plentyId')),
                     'Link'                          => $this->elasticExportCoreHelper->getUrl($variation, $settings),
                     'Anzahl Verkäufe'               => $this->getProperty($variation, $settings, 'sold_items'),
                     'Schuhbreite'                   => $this->getProperty($variation, $settings, 'shoe_width'),
@@ -437,7 +437,7 @@ class SchuheDE extends CSVPluginGenerator
         $categoryList = [];
 
         // go though the list of the category details
-        foreach($variation['data']['categories']['details'] as $category)
+        foreach($variation['data']['categories']['all'] as $category)
         {
             // pass the category id to construct the category path
             $category = $this->elasticExportCoreHelper->getCategory((int)$category['id'], $settings->get('lang'), $settings->get('plentyId'));
