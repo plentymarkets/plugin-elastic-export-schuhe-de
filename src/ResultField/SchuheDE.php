@@ -5,7 +5,9 @@ namespace ElasticExportSchuheDE\ResultField;
 use Plenty\Modules\Cloud\ElasticSearch\Lib\Source\Mutator\BuiltIn\LanguageMutator;
 use Plenty\Modules\DataExchange\Contracts\ResultFields;
 use Plenty\Modules\Helper\Services\ArrayHelper;
+use Plenty\Modules\Item\Search\Mutators\BarcodeMutator;
 use Plenty\Modules\Item\Search\Mutators\ImageMutator;
+use Plenty\Modules\Item\Search\Mutators\KeyMutator;
 use Plenty\Modules\Item\Search\Mutators\SkuMutator;
 
 
@@ -73,6 +75,8 @@ class SchuheDE extends ResultFields
             $itemDescriptionFields[] = 'texts.technicalData';
         }
 
+        $itemDescriptionFields[] = 'texts.lang';
+
         // Mutators
         /**
          * @var ImageMutator $imageMutator
@@ -88,14 +92,25 @@ class SchuheDE extends ResultFields
          */
         $languageMutator = pluginApp(LanguageMutator::class, [[$settings->get('lang')]]);
 
-        /**
-         * @var SkuMutator $skuMutator
-         */
-        $skuMutator = pluginApp(SkuMutator::class);
-        if($skuMutator instanceof SkuMutator)
-        {
-            $skuMutator->setMarket($reference);
-        }
+		/**
+		 * @var BarcodeMutator $barcodeMutator
+		 */
+		$barcodeMutator = pluginApp(BarcodeMutator::class);
+		if($barcodeMutator instanceof BarcodeMutator)
+		{
+			$barcodeMutator->addMarket($reference);
+		}
+
+		/**
+		 * @var KeyMutator
+		 */
+		$keyMutator = pluginApp(KeyMutator::class);
+
+		if($keyMutator instanceof KeyMutator)
+		{
+			$keyMutator->setKeyList($this->getKeyList());
+			$keyMutator->setNestedKeyList($this->getNestedKeyList());
+		}
 
         // Fields
         $fields = [
@@ -111,6 +126,7 @@ class SchuheDE extends ResultFields
                 'variation.vatId',
                 'variation.model',
                 'variation.isMain',
+				'variation.number',
 
                 //images
                 'images.all.urlMiddle',
@@ -138,14 +154,11 @@ class SchuheDE extends ResultFields
                 'unit.content',
                 'unit.id',
 
-                //sku
-                'skus.sku',
-
                 //defaultCategories
                 'defaultCategories.id',
 
                 //allCategories
-                'categories.all',
+                'ids.categories.all',
 
                 //barcodes
                 'barcodes.code',
@@ -155,11 +168,20 @@ class SchuheDE extends ResultFields
                 'attributes.attributeValueSetId',
                 'attributes.attributeId',
                 'attributes.valueId',
+
+				//properties
+				'properties.property.id',
+				'properties.property.valueType',
+				'properties.selection.name',
+				'properties.selection.lang',
+				'properties.texts.value',
+				'properties.texts.lang'
             ],
 
             [
                 $languageMutator,
-                $skuMutator
+				$barcodeMutator,
+				$keyMutator
             ],
         ];
 
@@ -177,4 +199,113 @@ class SchuheDE extends ResultFields
 
         return $fields;
     }
+
+	/**
+	 * @return array
+	 */
+	private function getKeyList()
+	{
+		return [
+			// Item
+			'item.id',
+			'item.manufacturer.id',
+			'item.conditionApi',
+
+			// Variation
+			'variation.availability.id',
+			'variation.model',
+			'variation.releasedAt',
+			'variation.stockLimitation',
+			'variation.weightG',
+			'variation.number',
+
+			// Unit
+			'unit.content',
+			'unit.id',
+
+			'ids.categories.all',
+		];
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getNestedKeyList()
+	{
+		return [
+			'keys' => [
+				// Attributes
+				'attributes',
+
+				// Barcodes
+				'barcodes',
+
+				// Default categories
+				'defaultCategories',
+
+				// Images
+				'images.all',
+				'images.item',
+				'images.variation',
+			],
+
+			'nestedKeys' => [
+				// Attributes
+				'attributes' => [
+					'attributeValueSetId',
+					'attributeId',
+					'valueId'
+				],
+
+				// Barcodes
+				'barcodes' => [
+					'code',
+					'type'
+				],
+
+				// Default categories
+				'defaultCategories' => [
+					'id'
+				],
+
+				// Images
+				'images.all' => [
+					'urlMiddle',
+					'urlPreview',
+					'urlSecondPreview',
+					'url',
+					'path',
+					'position',
+				],
+				'images.item' => [
+					'urlMiddle',
+					'urlPreview',
+					'urlSecondPreview',
+					'url',
+					'path',
+					'position',
+				],
+				'images.variation' => [
+					'urlMiddle',
+					'urlPreview',
+					'urlSecondPreview',
+					'url',
+					'path',
+					'position',
+				],
+
+				// texts
+				'texts' => [
+					'urlPath',
+					'name1',
+					'name2',
+					'name3',
+					'shortDescription',
+					'description',
+					'technicalData',
+					'lang'
+				],
+			]
+		];
+	}
 }

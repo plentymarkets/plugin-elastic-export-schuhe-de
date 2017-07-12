@@ -1,5 +1,11 @@
 # Release Notes für Elastic Export Schuhe.de
 
+## v1.0.4 (2017-07-11)
+
+### Geändert
+- Das Formatplugin basiert nun nur noch auf Elastic Search.
+- Die Performance wurde verbessert.
+
 ## v1.0.3 (2017-05-29)
 
 ### Geändert
