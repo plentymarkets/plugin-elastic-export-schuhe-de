@@ -32,7 +32,8 @@ class ElasticExportSchuheDEServiceProvider extends DataExchangeServiceProvider
             'ElasticExportSchuheDE\ResultField\SchuheDE',
             'ElasticExportSchuheDE\Generator\SchuheDE',
             '',
-            true
+            true,
+			true
         );
     }
 }
