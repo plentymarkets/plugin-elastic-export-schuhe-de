@@ -393,13 +393,13 @@ class SchuheDE extends CSVPluginGenerator
     {
         $categoryList = [];
 
-        if(is_array($variation['data']['ids']['categories']['all']) && count($variation['data']['categories']['all']) > 0)
+        if(is_array($variation['data']['ids']['categories']['branches']) && count($variation['data']['ids']['categories']['branches']) > 0)
         {
 			// go though the list of the category details
-			foreach($variation['data']['ids']['categories']['all'] as $category)
+			foreach($variation['data']['ids']['categories']['branches'] as $categoryId)
 			{
 				// pass the category id to construct the category path
-				$category = $this->elasticExportCoreHelper->getCategory((int)$category['id'], $settings->get('lang'), $settings->get('plentyId'));
+				$category = $this->elasticExportCoreHelper->getSingleCategory((int)$categoryId, $settings->get('lang'), $settings->get('plentyId'));
 
 				if(strlen($category))
 				{
