@@ -8,7 +8,7 @@
 - Prices will now be exported in the correct column with and without RRP.
 
 ### Changed
-- The user guide was enhanced.
+- The user guide was updated.
 - The automatic character limit of 256 was removed for the columns **Artikelname** and **Artikelbeschreibung**.
 
 ## v1.0.4 (2017-06-30)
