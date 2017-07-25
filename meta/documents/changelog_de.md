@@ -1,5 +1,16 @@
 # Release Notes für Elastic Export Schuhe.de
 
+## v1.0.5 (2017-07-25)
+
+### Behoben
+
+- Die Kategorien werden nun korrekt ausgegeben.
+- Die Preise werden nun mit und ohne UVP in der korrekten Spalte ausgegeben.
+
+### Geändert
+- Der User Guide wurde erweitert.
+- Die Zeichenbegrenzung auf 256 Zeichen für **Artikelname** und **Artikelbeschreibung** wurde entfernt.
+
 ## v1.0.4 (2017-07-11)
 
 ### Geändert
