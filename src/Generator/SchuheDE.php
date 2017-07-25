@@ -205,7 +205,6 @@ class SchuheDE extends CSVPluginGenerator
     private function buildRow($variation, $settings)
 	{
 		$variationAttributes = $this->getVariationAttributes($variation, $settings);
-		$itemName = strlen($this->elasticExportCoreHelper->getName($variation, $settings, 256)) <= 0 ? $variation['id'] : $this->elasticExportCoreHelper->getName($variation, $settings, 256);
         if($this->handled($variation['data']['item']['id'], $variationAttributes))
         {
             return;
@@ -230,10 +229,10 @@ class SchuheDE extends CSVPluginGenerator
 			'Identnummer'                   => $variation['id'],
 			'Artikelnummer'                 => $variation['data']['variation']['number'],
 			'Herstellerartikelnummer'       => $variation['data']['variation']['model'],
-			'Artikelname'                   => $itemName,
 			'Artikelbeschreibung'           => $this->elasticExportCoreHelper->getMutatedDescription($variation, $settings, 256),
 			'Bild' . '(er)'                 => $this->getImages($variation, $settings, ';'),
 			'360 Grad'                      => $this->getProperty($variation, $settings, '360_view_url'),
+			'Artikelname'                   => $this->elasticExportCoreHelper->getName($variation, $settings),
 			'360 Grad'                      => $this->getProperty($variationAttributes, $itemPropertyList, '360_view_url'),
 			'Bestand'                       => $this->elasticExportStockHelper->getStock($variation),
 			'Farbe'                         => $this->getProperty($variationAttributes, $itemPropertyList, 'color'),
