@@ -123,7 +123,7 @@ class SchuheDE extends CSVPluginGenerator
 			'Währung',
 			'Versandkosten',
 			'Info Versandkosten',
-			'Preis' . ' (UVP)',
+			'Preis (UVP)',
 			'reduzierter Preis',
 			'Grundpreis',
 			'Grundpreis Einheit',
@@ -205,31 +205,11 @@ class SchuheDE extends CSVPluginGenerator
     private function buildRow($variation, $settings)
 	{
 		$variationAttributes = $this->getVariationAttributes($variation, $settings);
-		$priceList = $this->elasticExportPriceHelper->getPriceList($variation, $settings, 2, '.');
-
-		if($this->handled($variation['data']['item']['id'], $variationAttributes))
-		{
-			return;
-		}
-
 		$itemName = strlen($this->elasticExportCoreHelper->getName($variation, $settings, 256)) <= 0 ? $variation['id'] : $this->elasticExportCoreHelper->getName($variation, $settings, 256);
 
-		if((float)$priceList['recommendedRetailPrice'] > 0)
-		{
-			$price = $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['price'] : $priceList['recommendedRetailPrice'];
-		}
-		else
-		{
-			$price = $priceList['price'];
-		}
-
-		$rrp = $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['recommendedRetailPrice'] : $priceList['price'];
-		if((float)$rrp == 0 || (float)$price == 0 || (float)$rrp == (float)$price)
-		{
-			$rrp = '';
-		}
 
 		$basePriceList = $this->elasticExportPriceHelper->getBasePriceDetails($variation, (float) $priceList['price'], $settings->get('lang'));
+		$priceList = $this->elasticExportPriceHelper->getPriceList($variation, $settings, 2, '.');
 
 		$deliveryCost = $this->elasticExportCoreHelper->getShippingCost($variation['data']['item']['id'], $settings);
 		if(!is_null($deliveryCost))
@@ -262,10 +242,10 @@ class SchuheDE extends CSVPluginGenerator
 			'Währung'                       => $priceList['currency'],
 			'Versandkosten'                 => $deliveryCost,
 			'Info Versandkosten'            => $this->getProperty($variation, $settings, 'shipping_costs_info'),
-			'Preis' . ' (UVP)'              => $rrp,
-			'reduzierter Preis'             => $price,
 			'Grundpreis'                    => $this->elasticExportPriceHelper->getBasePrice($variation, $priceList['price'], $settings->get('lang'), '/', false, false, $priceList['currency']),
 			'Grundpreis Einheit'            => $basePriceList['lot'],
+			'Preis (UVP)'                   => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['recommendedRetailPrice'] : $priceList['price'],
+			'reduzierter Preis'             => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['price'] : '',
 			'Kategorien'                    => $this->getCategories($variation, $settings),
 			'Link'                          => $this->elasticExportCoreHelper->getMutatedUrl($variation, $settings),
 			'Anzahl Verkäufe'               => $this->getProperty($variation, $settings, 'sold_items'),
