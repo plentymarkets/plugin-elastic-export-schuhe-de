@@ -212,9 +212,9 @@ class SchuheDE extends CSVPluginGenerator
 
         $itemPropertyList = $this->elasticExportPropertyHelper->getItemPropertyList($variation, self::SCHUHE_DE);
 
-		$basePriceList = $this->elasticExportPriceHelper->getBasePriceDetails($variation, (float) $priceList['price'], $settings->get('lang'));
 		$priceList = $this->elasticExportPriceHelper->getPriceList($variation, $settings, 2, '.');
 
+        $basePriceData = $this->elasticExportPriceHelper->getBasePriceDetails($variation, (float) $priceList['price'], $settings->get('lang'));
 
 		$data = [
 			'Identnummer'                   => $variation['id'],
@@ -236,12 +236,12 @@ class SchuheDE extends CSVPluginGenerator
 			'Saison'                        => $this->getProperty($variationAttributes, $itemPropertyList, 'season'),
 			'EAN'                           => $this->elasticExportCoreHelper->getBarcodeByType($variation, $settings->get('barcode')),
 			'Währung'                       => $priceList['currency'],
-			'Grundpreis'                    => $this->elasticExportPriceHelper->getBasePrice($variation, $priceList['price'], $settings->get('lang'), '/', false, false, $priceList['currency']),
-			'Grundpreis Einheit'            => $basePriceList['lot'],
 			'Versandkosten'                 => $this->elasticExportCoreHelper->getShippingCost($variation['data']['item']['id'], $settings),
 			'Info Versandkosten'            => $this->getProperty($variationAttributes, $itemPropertyList, 'shipping_costs_info'),
 			'Preis (UVP)'                   => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['recommendedRetailPrice'] : $priceList['price'],
 			'reduzierter Preis'             => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['price'] : '',
+            'Grundpreis'                    => count($basePriceData) ? number_format((float)$basePriceData['price'], 2, '.','') : '',
+            'Grundpreis Einheit'            => count($basePriceData) ? 'pro '.$basePriceData['lot'].' '.$basePriceData['unitLongName'] : '',
 			'Kategorien'                    => $this->getCategories($variation, $settings),
 			'Link'                          => $this->elasticExportCoreHelper->getMutatedUrl($variation, $settings),
 			'Anzahl Verkäufe'               => $this->getProperty($variationAttributes, $itemPropertyList, 'sold_items'),
