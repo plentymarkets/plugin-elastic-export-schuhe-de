@@ -13,7 +13,7 @@ Um dieses Format nutzen zu können, benötigen Sie das Plugin Elastic Export.
 
 Auf der Handbuchseite [Daten exportieren](https://www.plentymarkets.eu/handbuch/datenaustausch/daten-exportieren/#4) werden die einzelnen Formateinstellungen beschrieben.
 
-In der folgenden Tabelle finden Sie spezifische Hinweise zu den Einstellungen, Formateinstellungen und empfohlenen Artikelfiltern für das Format **SchuheDE-Plugin**.
+In der folgenden Tabelle finden Sie Hinweise zu den Einstellungen, Formateinstellungen und empfohlenen Artikelfiltern für das Format **SchuheDE-Plugin**.
 <table>
     <tr>
         <th>
@@ -340,7 +340,7 @@ In der folgenden Tabelle finden Sie spezifische Hinweise zu den Einstellungen, F
             Grundpreis Einheit
         </td>
         <td>
-            <b>Inhalt:</b> Die Einheit auf die sich der <b>Grundpreis</b> bezieht.
+            <b>Inhalt:</b> Die Einheit, auf die sich der <b>Grundpreis</b> bezieht.
         </td>        
     </tr>
     <tr>
