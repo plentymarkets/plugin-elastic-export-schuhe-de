@@ -215,15 +215,6 @@ class SchuheDE extends CSVPluginGenerator
 		$basePriceList = $this->elasticExportPriceHelper->getBasePriceDetails($variation, (float) $priceList['price'], $settings->get('lang'));
 		$priceList = $this->elasticExportPriceHelper->getPriceList($variation, $settings, 2, '.');
 
-		$deliveryCost = $this->elasticExportCoreHelper->getShippingCost($variation['data']['item']['id'], $settings);
-		if(!is_null($deliveryCost))
-		{
-			$deliveryCost = number_format((float)$deliveryCost, 2, '.', '');
-		}
-		else
-		{
-			$deliveryCost = '';
-		}
 
 		$data = [
 			'Identnummer'                   => $variation['id'],
@@ -245,9 +236,9 @@ class SchuheDE extends CSVPluginGenerator
 			'Saison'                        => $this->getProperty($variationAttributes, $itemPropertyList, 'season'),
 			'EAN'                           => $this->elasticExportCoreHelper->getBarcodeByType($variation, $settings->get('barcode')),
 			'Währung'                       => $priceList['currency'],
-			'Versandkosten'                 => $deliveryCost,
 			'Grundpreis'                    => $this->elasticExportPriceHelper->getBasePrice($variation, $priceList['price'], $settings->get('lang'), '/', false, false, $priceList['currency']),
 			'Grundpreis Einheit'            => $basePriceList['lot'],
+			'Versandkosten'                 => $this->elasticExportCoreHelper->getShippingCost($variation['data']['item']['id'], $settings),
 			'Info Versandkosten'            => $this->getProperty($variationAttributes, $itemPropertyList, 'shipping_costs_info'),
 			'Preis (UVP)'                   => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['recommendedRetailPrice'] : $priceList['price'],
 			'reduzierter Preis'             => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['price'] : '',
