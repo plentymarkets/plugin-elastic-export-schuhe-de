@@ -206,7 +206,12 @@ class SchuheDE extends CSVPluginGenerator
 	{
 		$variationAttributes = $this->getVariationAttributes($variation, $settings);
 		$itemName = strlen($this->elasticExportCoreHelper->getName($variation, $settings, 256)) <= 0 ? $variation['id'] : $this->elasticExportCoreHelper->getName($variation, $settings, 256);
+        if($this->handled($variation['data']['item']['id'], $variationAttributes))
+        {
+            return;
+        }
 
+        $itemPropertyList = $this->elasticExportPropertyHelper->getItemPropertyList($variation, self::SCHUHE_DE);
 
 		$basePriceList = $this->elasticExportPriceHelper->getBasePriceDetails($variation, (float) $priceList['price'], $settings->get('lang'));
 		$priceList = $this->elasticExportPriceHelper->getPriceList($variation, $settings, 2, '.');
@@ -229,45 +234,46 @@ class SchuheDE extends CSVPluginGenerator
 			'Artikelbeschreibung'           => $this->elasticExportCoreHelper->getMutatedDescription($variation, $settings, 256),
 			'Bild' . '(er)'                 => $this->getImages($variation, $settings, ';'),
 			'360 Grad'                      => $this->getProperty($variation, $settings, '360_view_url'),
+			'360 Grad'                      => $this->getProperty($variationAttributes, $itemPropertyList, '360_view_url'),
 			'Bestand'                       => $this->elasticExportStockHelper->getStock($variation),
-			'Farbe'                         => $this->getProperty($variation, $settings, 'color'),
-			'Farbe Suche I'                 => $this->getProperty($variation, $settings, 'color_1'),
-			'Farbe Suche II'                => $this->getProperty($variation, $settings, 'color_2'),
-			'Hersteller Farbbezeichnung'    => $this->getProperty($variation, $settings, 'producer_color'),
-			'GG Größengang'                 => $this->getProperty($variation, $settings, 'size_range'),
-			'Größe'                         => $this->getProperty($variation, $settings, 'size'),
+			'Farbe'                         => $this->getProperty($variationAttributes, $itemPropertyList, 'color'),
+			'Farbe Suche I'                 => $this->getProperty($variationAttributes, $itemPropertyList, 'color_1'),
+			'Farbe Suche II'                => $this->getProperty($variationAttributes, $itemPropertyList, 'color_2'),
+			'Hersteller Farbbezeichnung'    => $this->getProperty($variationAttributes, $itemPropertyList, 'producer_color'),
+			'GG Größengang'                 => $this->getProperty($variationAttributes, $itemPropertyList, 'size_range'),
+			'Größe'                         => $this->getProperty($variationAttributes, $itemPropertyList, 'size'),
 			'Marke'                         => $this->elasticExportCoreHelper->getExternalManufacturerName((int)$variation['data']['item']['manufacturer']['id']),
-			'Saison'                        => $this->getProperty($variation, $settings, 'season'),
+			'Saison'                        => $this->getProperty($variationAttributes, $itemPropertyList, 'season'),
 			'EAN'                           => $this->elasticExportCoreHelper->getBarcodeByType($variation, $settings->get('barcode')),
 			'Währung'                       => $priceList['currency'],
 			'Versandkosten'                 => $deliveryCost,
-			'Info Versandkosten'            => $this->getProperty($variation, $settings, 'shipping_costs_info'),
 			'Grundpreis'                    => $this->elasticExportPriceHelper->getBasePrice($variation, $priceList['price'], $settings->get('lang'), '/', false, false, $priceList['currency']),
 			'Grundpreis Einheit'            => $basePriceList['lot'],
+			'Info Versandkosten'            => $this->getProperty($variationAttributes, $itemPropertyList, 'shipping_costs_info'),
 			'Preis (UVP)'                   => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['recommendedRetailPrice'] : $priceList['price'],
 			'reduzierter Preis'             => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['price'] : '',
 			'Kategorien'                    => $this->getCategories($variation, $settings),
 			'Link'                          => $this->elasticExportCoreHelper->getMutatedUrl($variation, $settings),
-			'Anzahl Verkäufe'               => $this->getProperty($variation, $settings, 'sold_items'),
-			'Schuhbreite'                   => $this->getProperty($variation, $settings, 'shoe_width'),
-			'Absatzhöhe'                    => $this->getProperty($variation, $settings, 'heel_height'),
-			'Absatzform'                    => $this->getProperty($variation, $settings, 'heel_form'),
-			'Schuhspitze'                   => $this->getProperty($variation, $settings, 'shoe_tip'),
-			'Obermaterial'                  => $this->getProperty($variation, $settings, 'upper_material'),
-			'Schaftweite'                   => $this->getProperty($variation, $settings, 'calf_size'),
-			'Schafthöhe'                    => $this->getProperty($variation, $settings, 'calf_height'),
-			'Materialzusammensetzung'       => $this->getProperty($variation, $settings, 'material_composition'),
-			'Besonderheiten'                => $this->getProperty($variation, $settings, 'features'),
-			'Verschluss'                    => $this->getProperty($variation, $settings, 'fastener'),
-			'Innenmaterial'                 => $this->getProperty($variation, $settings, 'interior_material'),
-			'Sohle'                         => $this->getProperty($variation, $settings, 'sole'),
-			'Größenhinweis'                 => $this->getProperty($variation, $settings, 'size_advice'),
-			'Wechselfussbett'               => $this->getProperty($variation, $settings, 'removable_insole'),
-			'Wasserdicht'                   => $this->getProperty($variation, $settings, 'waterproof'),
-			'Promotion'                     => $this->getProperty($variation, $settings, 'promotion'),
-			'URL Video'                     => $this->getProperty($variation, $settings, 'video_url'),
-			'Steuersatz'                    => $this->getProperty($variation, $settings, 'tax'),
-			'ANWR schuh Trend'              => $this->getProperty($variation, $settings, 'shoe_trend'),
+			'Anzahl Verkäufe'               => $this->getProperty($variationAttributes, $itemPropertyList, 'sold_items'),
+			'Schuhbreite'                   => $this->getProperty($variationAttributes, $itemPropertyList, 'shoe_width'),
+			'Absatzhöhe'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'heel_height'),
+			'Absatzform'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'heel_form'),
+			'Schuhspitze'                   => $this->getProperty($variationAttributes, $itemPropertyList, 'shoe_tip'),
+			'Obermaterial'                  => $this->getProperty($variationAttributes, $itemPropertyList, 'upper_material'),
+			'Schaftweite'                   => $this->getProperty($variationAttributes, $itemPropertyList, 'calf_size'),
+			'Schafthöhe'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'calf_height'),
+			'Materialzusammensetzung'       => $this->getProperty($variationAttributes, $itemPropertyList, 'material_composition'),
+			'Besonderheiten'                => $this->getProperty($variationAttributes, $itemPropertyList, 'features'),
+			'Verschluss'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'fastener'),
+			'Innenmaterial'                 => $this->getProperty($variationAttributes, $itemPropertyList, 'interior_material'),
+			'Sohle'                         => $this->getProperty($variationAttributes, $itemPropertyList, 'sole'),
+			'Größenhinweis'                 => $this->getProperty($variationAttributes, $itemPropertyList, 'size_advice'),
+			'Wechselfussbett'               => $this->getProperty($variationAttributes, $itemPropertyList, 'removable_insole'),
+			'Wasserdicht'                   => $this->getProperty($variationAttributes, $itemPropertyList, 'waterproof'),
+			'Promotion'                     => $this->getProperty($variationAttributes, $itemPropertyList, 'promotion'),
+			'URL Video'                     => $this->getProperty($variationAttributes, $itemPropertyList, 'video_url'),
+			'Steuersatz'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'tax'),
+			'ANWR schuh Trend'              => $this->getProperty($variationAttributes, $itemPropertyList, 'shoe_trend'),
 		];
 
 		$this->addCSVContent(array_values($data));
@@ -276,21 +282,17 @@ class SchuheDE extends CSVPluginGenerator
     /**
      * Get property.
      *
-     * @param  array    $variation
-     * @param  KeyValue $settings
+     * @param  array    $variationAttributes
+     * @param  array    $itemPropertyList
      * @param  string   $property
      * @return string
      */
-    private function getProperty($variation, KeyValue $settings, string $property):string
+    private function getProperty(array $variationAttributes, array $itemPropertyList, string $property):string
     {
-        $variationAttributes = $this->getVariationAttributes($variation, $settings);
-
         if(array_key_exists($property, $variationAttributes))
         {
             return $variationAttributes[$property];
         }
-
-        $itemPropertyList = $this->elasticExportPropertyHelper->getItemPropertyList($variation, self::SCHUHE_DE);
 
         if(array_key_exists($property, $itemPropertyList))
         {
