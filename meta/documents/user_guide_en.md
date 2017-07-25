@@ -195,7 +195,7 @@ The following table lists details for settings, format settings and recommended 
             </td>
             <td>
                 <b>Required</b><br>
-                <b>Ausgabe:</b> The <b>net stock</b> of the variation. If an variation is not limited to its net stock, b>999</b> übertragen.
+                <b>Ausgabe:</b> The <b>net stock</b> of the variation. If a variation is not limited to its net stock, b>999</b> übertragen.
             </td>        
         </tr>
         <tr>
@@ -435,7 +435,7 @@ The following table lists details for settings, format settings and recommended 
             </td>
             <td>
                 <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> unter 5 cm, 5 - 15 cm, 15 - 25 cm, 25 - 35 cm, 35 - 45 cm<br>
+                <b>Allowed values:</b> unter 5cm, 5-15cm, 15-25cm, 25-35cm, 35-45cm<br>
                 <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Shaft height</b>.
             </td>        
         </tr>
