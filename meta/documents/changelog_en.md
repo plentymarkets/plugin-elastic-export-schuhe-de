@@ -5,7 +5,7 @@
 ### Fixed
 
 - The categories will now be exported correctly.
-- Prices will now be exported in the correct column with and without a RRP.
+- Prices will now be exported in the correct column with and without RRP.
 
 ### Changed
 - The user guide was enhanced.
