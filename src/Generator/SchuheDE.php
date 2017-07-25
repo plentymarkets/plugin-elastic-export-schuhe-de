@@ -108,7 +108,7 @@ class SchuheDE extends CSVPluginGenerator
 			'Herstellerartikelnummer',
 			'Artikelname',
 			'Artikelbeschreibung',
-			'Bild' . '(er)',
+			'Bild(er)',
 			'360 Grad',
 			'Bestand',
 			'Farbe',
