@@ -1,6 +1,6 @@
 # Release Notes for Elastic Export Schuhe.de
 
-## v1.0.5 (2017-07-25)
+## v1.0.5 (2017-07-26)
 
 ### Fixed
 
