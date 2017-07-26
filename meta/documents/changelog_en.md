@@ -1,5 +1,16 @@
 # Release Notes for Elastic Export Schuhe.de
 
+## v1.0.5 (2017-07-26)
+
+### Fixed
+
+- The categories will now be exported correctly.
+- Prices will now be exported in the correct column with and without RRP.
+
+### Changed
+- The user guide was updated.
+- The automatic character limit of 256 was removed for the columns **Artikelname** and **Artikelbeschreibung**.
+
 ## v1.0.4 (2017-06-30)
 
 ### Changed

@@ -108,7 +108,7 @@ class SchuheDE extends CSVPluginGenerator
 			'Herstellerartikelnummer',
 			'Artikelname',
 			'Artikelbeschreibung',
-			'Bild' . '(er)',
+			'Bild(er)',
 			'360 Grad',
 			'Bestand',
 			'Farbe',
@@ -123,7 +123,7 @@ class SchuheDE extends CSVPluginGenerator
 			'Währung',
 			'Versandkosten',
 			'Info Versandkosten',
-			'Preis' . ' (UVP)',
+			'Preis (UVP)',
 			'reduzierter Preis',
 			'Grundpreis',
 			'Grundpreis Einheit',
@@ -205,89 +205,64 @@ class SchuheDE extends CSVPluginGenerator
     private function buildRow($variation, $settings)
 	{
 		$variationAttributes = $this->getVariationAttributes($variation, $settings);
+        if($this->handled($variation['data']['item']['id'], $variationAttributes))
+        {
+            return;
+        }
+
+        $itemPropertyList = $this->elasticExportPropertyHelper->getItemPropertyList($variation, self::SCHUHE_DE);
+
 		$priceList = $this->elasticExportPriceHelper->getPriceList($variation, $settings, 2, '.');
 
-		if($this->handled($variation['data']['item']['id'], $variationAttributes))
-		{
-			return;
-		}
-
-		$itemName = strlen($this->elasticExportCoreHelper->getName($variation, $settings, 256)) <= 0 ? $variation['id'] : $this->elasticExportCoreHelper->getName($variation, $settings, 256);
-
-		if((float)$priceList['recommendedRetailPrice'] > 0)
-		{
-			$price = $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['price'] : $priceList['recommendedRetailPrice'];
-		}
-		else
-		{
-			$price = $priceList['price'];
-		}
-
-		$rrp = $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['recommendedRetailPrice'] : $priceList['price'];
-		if((float)$rrp == 0 || (float)$price == 0 || (float)$rrp == (float)$price)
-		{
-			$rrp = '';
-		}
-
-		$basePriceList = $this->elasticExportPriceHelper->getBasePriceDetails($variation, (float) $priceList['price'], $settings->get('lang'));
-
-		$deliveryCost = $this->elasticExportCoreHelper->getShippingCost($variation['data']['item']['id'], $settings);
-		if(!is_null($deliveryCost))
-		{
-			$deliveryCost = number_format((float)$deliveryCost, 2, '.', '');
-		}
-		else
-		{
-			$deliveryCost = '';
-		}
+        $basePriceData = $this->elasticExportPriceHelper->getBasePriceDetails($variation, (float) $priceList['price'], $settings->get('lang'));
 
 		$data = [
 			'Identnummer'                   => $variation['id'],
 			'Artikelnummer'                 => $variation['data']['variation']['number'],
 			'Herstellerartikelnummer'       => $variation['data']['variation']['model'],
-			'Artikelname'                   => $itemName,
-			'Artikelbeschreibung'           => $this->elasticExportCoreHelper->getMutatedDescription($variation, $settings, 256),
-			'Bild' . '(er)'                 => $this->getImages($variation, $settings, ';'),
-			'360 Grad'                      => $this->getProperty($variation, $settings, '360_view_url'),
+			'Artikelname'                   => $this->elasticExportCoreHelper->getName($variation, $settings),
+			'Artikelbeschreibung'           => $this->elasticExportCoreHelper->getMutatedDescription($variation, $settings),
+			'Bild(er)'                      => $this->getImages($variation, $settings, ';'),
+			'360 Grad'                      => $this->getProperty($variationAttributes, $itemPropertyList, '360_view_url'),
 			'Bestand'                       => $this->elasticExportStockHelper->getStock($variation),
-			'Farbe'                         => $this->getProperty($variation, $settings, 'color'),
-			'Farbe Suche I'                 => $this->getProperty($variation, $settings, 'color_1'),
-			'Farbe Suche II'                => $this->getProperty($variation, $settings, 'color_2'),
-			'Hersteller Farbbezeichnung'    => $this->getProperty($variation, $settings, 'producer_color'),
-			'GG Größengang'                 => $this->getProperty($variation, $settings, 'size_range'),
-			'Größe'                         => $this->getProperty($variation, $settings, 'size'),
+			'Farbe'                         => $this->getProperty($variationAttributes, $itemPropertyList, 'color'),
+			'Farbe Suche I'                 => $this->getProperty($variationAttributes, $itemPropertyList, 'color_1'),
+			'Farbe Suche II'                => $this->getProperty($variationAttributes, $itemPropertyList, 'color_2'),
+			'Hersteller Farbbezeichnung'    => $this->getProperty($variationAttributes, $itemPropertyList, 'producer_color'),
+			'GG Größengang'                 => $this->getProperty($variationAttributes, $itemPropertyList, 'size_range'),
+			'Größe'                         => $this->getProperty($variationAttributes, $itemPropertyList, 'size'),
 			'Marke'                         => $this->elasticExportCoreHelper->getExternalManufacturerName((int)$variation['data']['item']['manufacturer']['id']),
-			'Saison'                        => $this->getProperty($variation, $settings, 'season'),
+			'Saison'                        => $this->getProperty($variationAttributes, $itemPropertyList, 'season'),
 			'EAN'                           => $this->elasticExportCoreHelper->getBarcodeByType($variation, $settings->get('barcode')),
 			'Währung'                       => $priceList['currency'],
-			'Versandkosten'                 => $deliveryCost,
-			'Info Versandkosten'            => $this->getProperty($variation, $settings, 'shipping_costs_info'),
-			'Preis' . ' (UVP)'              => $rrp,
-			'reduzierter Preis'             => $price,
-			'Grundpreis'                    => $this->elasticExportPriceHelper->getBasePrice($variation, $priceList['price'], $settings->get('lang'), '/', false, false, $priceList['currency']),
-			'Grundpreis Einheit'            => $basePriceList['lot'],
+			'Versandkosten'                 => $this->elasticExportCoreHelper->getShippingCost($variation['data']['item']['id'], $settings),
+			'Info Versandkosten'            => $this->getProperty($variationAttributes, $itemPropertyList, 'shipping_costs_info'),
+			'Preis (UVP)'                   => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['recommendedRetailPrice'] : $priceList['price'],
+			'reduzierter Preis'             => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['price'] : '',
+            'Grundpreis'                    => count($basePriceData) ? number_format((float)$basePriceData['price'], 2, '.','') : '',
+            'Grundpreis Einheit'            => count($basePriceData) ? 'pro '.$basePriceData['lot'].' '.$basePriceData['unitLongName'] : '',
 			'Kategorien'                    => $this->getCategories($variation, $settings),
 			'Link'                          => $this->elasticExportCoreHelper->getMutatedUrl($variation, $settings),
-			'Anzahl Verkäufe'               => $this->getProperty($variation, $settings, 'sold_items'),
-			'Schuhbreite'                   => $this->getProperty($variation, $settings, 'shoe_width'),
-			'Absatzhöhe'                    => $this->getProperty($variation, $settings, 'heel_height'),
-			'Absatzform'                    => $this->getProperty($variation, $settings, 'heel_form'),
-			'Schuhspitze'                   => $this->getProperty($variation, $settings, 'shoe_tip'),
-			'Obermaterial'                  => $this->getProperty($variation, $settings, 'upper_material'),
-			'Schaftweite'                   => $this->getProperty($variation, $settings, 'calf_size'),
-			'Schafthöhe'                    => $this->getProperty($variation, $settings, 'calf_height'),
-			'Materialzusammensetzung'       => $this->getProperty($variation, $settings, 'material_composition'),
-			'Besonderheiten'                => $this->getProperty($variation, $settings, 'features'),
-			'Verschluss'                    => $this->getProperty($variation, $settings, 'fastener'),
-			'Innenmaterial'                 => $this->getProperty($variation, $settings, 'interior_material'),
-			'Sohle'                         => $this->getProperty($variation, $settings, 'sole'),
-			'Größenhinweis'                 => $this->getProperty($variation, $settings, 'size_advice'),
-			'Wechselfussbett'               => $this->getProperty($variation, $settings, 'removable_insole'),
-			'Wasserdicht'                   => $this->getProperty($variation, $settings, 'waterproof'),
-			'Promotion'                     => $this->getProperty($variation, $settings, 'promotion'),
-			'URL Video'                     => $this->getProperty($variation, $settings, 'video_url'),
-			'Steuersatz'                    => $this->getProperty($variation, $settings, 'tax'),
-			'ANWR schuh Trend'              => $this->getProperty($variation, $settings, 'shoe_trend'),
+			'Anzahl Verkäufe'               => $this->getProperty($variationAttributes, $itemPropertyList, 'sold_items'),
+			'Schuhbreite'                   => $this->getProperty($variationAttributes, $itemPropertyList, 'shoe_width'),
+			'Absatzhöhe'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'heel_height'),
+			'Absatzform'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'heel_form'),
+			'Schuhspitze'                   => $this->getProperty($variationAttributes, $itemPropertyList, 'shoe_tip'),
+			'Obermaterial'                  => $this->getProperty($variationAttributes, $itemPropertyList, 'upper_material'),
+			'Schaftweite'                   => $this->getProperty($variationAttributes, $itemPropertyList, 'calf_size'),
+			'Schafthöhe'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'calf_height'),
+			'Materialzusammensetzung'       => $this->getProperty($variationAttributes, $itemPropertyList, 'material_composition'),
+			'Besonderheiten'                => $this->getProperty($variationAttributes, $itemPropertyList, 'features'),
+			'Verschluss'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'fastener'),
+			'Innenmaterial'                 => $this->getProperty($variationAttributes, $itemPropertyList, 'interior_material'),
+			'Sohle'                         => $this->getProperty($variationAttributes, $itemPropertyList, 'sole'),
+			'Größenhinweis'                 => $this->getProperty($variationAttributes, $itemPropertyList, 'size_advice'),
+			'Wechselfussbett'               => $this->getProperty($variationAttributes, $itemPropertyList, 'removable_insole'),
+			'Wasserdicht'                   => $this->getProperty($variationAttributes, $itemPropertyList, 'waterproof'),
+			'Promotion'                     => $this->getProperty($variationAttributes, $itemPropertyList, 'promotion'),
+			'URL Video'                     => $this->getProperty($variationAttributes, $itemPropertyList, 'video_url'),
+			'Steuersatz'                    => $this->getProperty($variationAttributes, $itemPropertyList, 'tax'),
+			'ANWR schuh Trend'              => $this->getProperty($variationAttributes, $itemPropertyList, 'shoe_trend'),
 		];
 
 		$this->addCSVContent(array_values($data));
@@ -296,21 +271,17 @@ class SchuheDE extends CSVPluginGenerator
     /**
      * Get property.
      *
-     * @param  array    $variation
-     * @param  KeyValue $settings
+     * @param  array    $variationAttributes
+     * @param  array    $itemPropertyList
      * @param  string   $property
      * @return string
      */
-    private function getProperty($variation, KeyValue $settings, string $property):string
+    private function getProperty(array $variationAttributes, array $itemPropertyList, string $property):string
     {
-        $variationAttributes = $this->getVariationAttributes($variation, $settings);
-
         if(array_key_exists($property, $variationAttributes))
         {
             return $variationAttributes[$property];
         }
-
-        $itemPropertyList = $this->elasticExportPropertyHelper->getItemPropertyList($variation, self::SCHUHE_DE);
 
         if(array_key_exists($property, $itemPropertyList))
         {
@@ -413,13 +384,13 @@ class SchuheDE extends CSVPluginGenerator
     {
         $categoryList = [];
 
-        if(is_array($variation['data']['ids']['categories']['all']) && count($variation['data']['categories']['all']) > 0)
+        if(is_array($variation['data']['ids']['categories']['branches']) && count($variation['data']['ids']['categories']['branches']) > 0)
         {
 			// go though the list of the category details
-			foreach($variation['data']['ids']['categories']['all'] as $category)
+			foreach($variation['data']['ids']['categories']['branches'] as $categoryId)
 			{
 				// pass the category id to construct the category path
-				$category = $this->elasticExportCoreHelper->getCategory((int)$category['id'], $settings->get('lang'), $settings->get('plentyId'));
+				$category = $this->elasticExportCoreHelper->getSingleCategory((int)$categoryId, $settings->get('lang'), $settings->get('plentyId'));
 
 				if(strlen($category))
 				{
