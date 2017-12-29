@@ -1,5 +1,10 @@
 # Release Notes for Elastic Export Schuhe.de
 
+## v1.1.0 (2017-12-28)
+
+### Added
+- The plugin takes the new fields "Stockbuffer", "Stock for variations without stock limitation" and "Stock for variations with not stock administration" into account.
+
 ## v1.0.5 (2017-07-26)
 
 ### Fixed
