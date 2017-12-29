@@ -100,6 +100,8 @@ class SchuheDE extends CSVPluginGenerator
 
 		$settings = $this->arrayHelper->buildMapFromObjectList($formatSettings, 'key', 'value');
 
+		$this->elasticExportStockHelper->setAdditionalStockInformation($settings);
+		
 		$this->setDelimiter(";");
 
 		$this->addCSVContent([
