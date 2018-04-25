@@ -1,6 +1,6 @@
 # Release Notes for Elastic Export Schuhe.de
 
-## v1.1.2 (2018-04-19)
+## v1.1.2 (2018-04-25)
 
 ### Changed
 - The class FiltrationService is responsible for the filtration of all variations.
