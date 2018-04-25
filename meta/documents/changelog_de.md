@@ -1,5 +1,11 @@
 # Release Notes für Elastic Export Schuhe.de
 
+## v1.1.2 (2018-04-25)
+
+### Geändert
+- Die Filtrierung der Varianten wird durch die Klasse FiltrationService vorgenommen.
+- Vorschaubilder aktualisiert.
+
 ## v1.1.1 (2018-02-16)
 
 ### Geändert
