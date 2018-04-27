@@ -6,6 +6,7 @@ use ElasticExport\Helper\ElasticExportCoreHelper;
 use ElasticExport\Helper\ElasticExportPriceHelper;
 use ElasticExport\Helper\ElasticExportPropertyHelper;
 use ElasticExport\Helper\ElasticExportStockHelper;
+use ElasticExport\Services\FiltrationService;
 use Plenty\Modules\DataExchange\Contracts\CSVPluginGenerator;
 use Plenty\Modules\Helper\Services\ArrayHelper;
 use Plenty\Modules\Helper\Models\KeyValue;
@@ -67,6 +68,11 @@ class SchuheDE extends CSVPluginGenerator
     private $variations = [];
 
     /**
+     * @var FiltrationService
+     */
+    private $filtrationService;
+
+    /**
      * SchuheDE constructor.
      *
      * @param ArrayHelper $arrayHelper
@@ -99,6 +105,7 @@ class SchuheDE extends CSVPluginGenerator
 		$this->elasticExportPropertyHelper 	= pluginApp(ElasticExportPropertyHelper::class);
 
 		$settings = $this->arrayHelper->buildMapFromObjectList($formatSettings, 'key', 'value');
+		$this->filtrationService = pluginApp(FiltrationService::class, [$settings, $filter]);
 
 		$this->elasticExportStockHelper->setAdditionalStockInformation($settings);
 		
@@ -176,7 +183,7 @@ class SchuheDE extends CSVPluginGenerator
 
 					if(is_array($resultList['documents']) && count($resultList['documents']) > 0)
 					{
-						if($this->elasticExportStockHelper->isFilteredByStock($variation, $filter) === true)
+						if($this->filtrationService->filter($variation))
 						{
 							continue;
 						}
