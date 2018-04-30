@@ -1,5 +1,10 @@
 # Release Notes für Elastic Export Schuhe.de
 
+## v1.1.3 (2018-04-30)
+
+### Geändert
+- Laravel 5.5 update.
+
 ## v1.1.2 (2018-04-25)
 
 ### Geändert
