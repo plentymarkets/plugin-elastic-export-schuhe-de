@@ -9,571 +9,109 @@ Schuhe.de is an online platform by the ANWR Group that links online stores with 
 
 ## 2 Setting up the data format SchuheDE-Plugin in plentymarkets
 
-The plugin Elastic Export is required to use this format.
+By installing this plugin you will receive the export format **SchuheDE-Plugin**. Use this format to exchange data between plentymarkets and Schuhe.de. It is required to install the Plugin Elastic export from the plentyMarketplace first before you can use the format **SchuheDE-Plugin** in plentymarkets.
 
-Refer to the [Exporting data formats for price search engines](https://knowledge.plentymarkets.com/en/basics/data-exchange/exporting-data#30) page of the manual for further details about the individual format settings.
+Once both plugins are installed, you can create the export format **SchuheDE-Plugin**. Refer to the [Exporting data formats for price search engines](https://knowledge.plentymarkets.com/en/basics/data-exchange/export-import/exporting-data#30) page of the manual for further details about the individual format settings.
+
+Creating a new export format:
+
+1. Go to **Data » Elastic export**.
+2. Click on **New export**.
+3. Carry out the settings as desired. Pay attention to the information given in table 1.
+4. **Save** the settings.
+→ The export format is given an ID and it appears in the overview within the **Exports** tab.
 
 The following table lists details for settings, format settings and recommended item filters for the format **SchuheDE-Plugin**.
 
-<table>
-    <tr>
-        <th>
-            Settings
-        </th>
-        <th>
-            Explanation
-        </th>
-    </tr>
-    <tr>
-        <td class="th" colspan="2">
-            Settings
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Format
-        </td>
-        <td>
-            Choose <b>SchuheDE-Plugin</b>.
-        </td>        
-    </tr>
-    <tr>
-        <td>
-            Provisioning
-        </td>
-        <td>
-            Choose <b>URL</b>.
-        </td>        
-    </tr>
-    <tr>
-        <td>
-            File name
-        </td>
-        <td>
-            The file name must have the ending <b>.csv</b> or <b>.txt</b> for Shopzilla.de to be able to import the file successfully.
-        </td>        
-    </tr>
-    <tr>
-        <td class="th" colspan="2">
-            Item filter
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Active
-        </td>
-        <td>
-            Choose <b>active</b>.
-        </td>        
-    </tr>
-    <tr>
-        <td>
-            Markets
-        </td>
-        <td>
-            Choose one or multiple order referrer. The chosen order referrer has to be active at the variation for the item to be exported.
-        </td>        
-    </tr>
-    <tr>
-        <td class="th" colspan="2">
-            Format settings
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Order referrer
-        </td>
-        <td>
-            Choose the order referrer that should be assigned during the order import.
-        </td>        
-    </tr>
-    <tr>
-    	<td>
-    		Stockbuffer
-    	</td>
-    	<td>
-    		The stock buffer for variations with the limitation to the netto stock.
-    	</td>        
-    </tr>
-    <tr>
-    	<td>
-    		Stock for Variations without stock limitation
-    	</td>
-    	<td>
-    		The stock for variations without stock limitation.
-    	</td>        
-    </tr>
-    <tr>
-    	<td>
-    		The stock for variations with not stock administration
-    	</td>
-    	<td>
-    		The stock for variations without stock administration.
-    	</td>        
-    </tr>
-    <tr>
-        <td>
-            Preview text
-        </td>
-        <td>
-            This option does not affect this format.
-        </td>        
-    </tr>
-    <tr>
-        <td>
-            Offer price
-        </td>
-        <td>
-            This option is not relevant for this format.
-        </td>        
-    </tr>
-    <tr>
-        <td>
-            VAT note
-        </td>
-        <td>
-            This option is not relevant for this format.
-        </td>        
-    </tr>
-</table>
+| **Setting**                                           | **Explanation** | 
+| :---                                                  | :--- |
+| **Settings**                                          | |
+| **Name**                                              | Enter a name. The export format is listed by this name in the overview within the **Exports** tab. |
+| **Type**                                              | Select the type **Item** from the drop-down list. |
+| **Format**                                            | Select **SchuheDE-Plugin**. |
+| **Limit**                                             | Enter a number. If you want to transfer more than 9,999 data records to the price search engine, then the output file will not be generated again for another 24 hours. This is to save resources. If more than 9,999 data records are necessary, the setting Generate cache file has to be active. |
+| **Generate cache file**                               | Place a check mark if you want to transfer more than 9,999 data records to the price search engine. The output file will not be regenerated for another 24 hours. We recommend that you do not activate this setting for more than 20 export formats. This is to ensure a high performance of the elastic export. |
+| **Provisioning**                                      | Select **URL**. This option generates a token for authentication in order to allow external access. |
+| **File name**                                         | If you have selected the option **URL** under **Provisioning**, then click on **Generate token**. The token is entered automatically. When the token is generated under **Token**, the URL is entered automatically. |
+| **Token, URL**                                        | The file name must have the ending **.csv** or **.txt** for schuhe.de to be able to import the file successfully. |
+| **Item filters**                                      | |
+| **Add item filters**                                  | Select an item filter from the drop-down list and click on **Add**. There are no filters set in default. It is possible to add multiple item filters from the drop-down list one after the other.<br/> **Variations** = Select **Transfer all** or **Only transfer main variations**.<br/> **Markets** = Select one or multiple markets. The chosen order referrer has to be active at the variation for the item to be exported.<br/> **Currency** = Select a currency.<br/> **Category** = Activate to transfer the item with its category link. Only items belonging to this category are exported.<br/> **Image** = Activate to transfer the item with its image. Only items with images are transferred.<br/> **Client** = Select a client.<br/> **Stock** = Select which stocks you want to export.<br/> **Flag 1 - 2** = Select the flag.<br/> **Manufacturer** = Select one, several or ALL manufacturers.<br/> **Active** = Select **Active**. Only active variations are exported. |
+| **Format settings**                                   | |
+| **Product URL**                                       | Choose the URL that you wish to transfer to the price comparison portal. You can choose between the item's URL and the variation's URL. Variation URLs can only be transferred in combination with the Ceres store. |
+| **Client**                                            | Select a client. This setting is used for the URL structure. |
+| **URL parameter**                                     | Enter a suffix for the product URL if this is required for the export. This character string will be added to the product URL if you have activated the transfer option for the product URL further up. |
+| **Order referrer**                                    | Choose the order referrer that should be assigned during the order import from the drop-down list. |
+| **Marketplace account**                               | Select the marketplace account from the drop-down list. The selected referrer is added to the product URL so that sales can be analysed later. |
+| **Language**                                          | Select the language from the drop-down list. |
+| **Item name**                                         | Select **Name 1**, **Name 2** or **Name 3**. These names are saved in the **Texts** tab of the item. Enter a number into the **Maximum number of characters (def. Text)** field if desired. This specifies how many characters should be exported for the item name. |
+| **Preview text**                                      | This option does not affect this format. |
+| **Description**                                       | Select the text that you want to transfer as description.<br/> Enter a number into the **Maximum number of characters (def. text)** field if desired. This specifies how many characters should be exported for the description.<br/> Activate the option **Remove HTML tags** if you want HTML tags to be removed during the export. If you only want to allow specific HTML tags to be exported, then enter these tags into the field **Permitted HTML tags, separated by comma (def. Text)**. Use commas to separate multiple tags. |
+| **Target country**                                    | Select the target country from the drop-down list. |
+| **Barcode**                                           | Select the ASIN, ISBN or an EAN from the drop-down list. The barcode has to be linked to the order referrer selected above. If the barcode is not linked to the order referrer, it will not be exported. |
+| **Image**                                             | Select **Position 0** or **First image** to export this image.<br/> **Position 0** = An image with position 0 is transferred.<br/> **First image** = The first image is transferred. |
+| **Image position of the energy label**                | This option does not affect this format. |
+| **Stock buffer**                                      | The stock buffer for variations with limitation to the net stock. |
+| **Stock for variations without stock limitation**     | The stock for variations without stock limitation. |
+| **Stock for variations with no stock administration** | The stock for variations without stock administration. |
+| **Live currency conversion**                          | Activate this option to convert the price into the currency of the selected country of delivery. The price has to be released for the corresponding currency. |
+| **Retail price**                                      | Select the gross price or net price from the drop-down list. |
+| **Offer price**                                       | This option does not affect this format. |
+| **RRP**                                               | Activate to transfer the RRP. |
+| **Shipping costs**                                    | Activate this option if you want to use the shipping costs that are saved in a configuration. If this option is activated, then you are able to select the configuration and the payment method from the drop-down lists.<br/> Activate the option **Transfer flat rate shipping charge** if you want to use a fixed shipping charge. If this option is activated, a value has to be entered in the line underneath. |
+| **VAT note**                                          | This option does not affect this format. |
+| **Item availability**                                 | Activate the **overwrite** option and enter item availabilities into the fields **1** to **10**. The fields represent the IDs of the availabilities. This overwrites the item availabilities that are saved in the menu **System » Item » Item availability**. |
+       
+_Tab. 1: Settings for the data format **SchuheDE-Plugin**_
 
-## 3 Overview of available columns
+## 3 Available columns of the export file
 
-<table>
-    <tr>
-        <th>
-            Column name
-        </th>
-        <th>
-            Explanation
-        </th>
-    </tr>
-        <tr>
-            <td>
-                Identnummer
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Content:</b> The <b>variation ID</b> of the variation.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Artikelnummer
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The <b>Variation No.</b> within <b>Items » Edit item » Open item » Open variation » Settings » Basic settings</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Herstellerartikelnummer
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The <b>Model</b> within <b>Items » Edit item » Open item » Open variation » Settings » Basic settings</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Artikelname
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Limitation:</b> max. 255 characters<br>
-                <b>Content:</b> According to the format setting <b>item name</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Artikelbeschreibung
-            </td>
-            <td>
-                <b>Content:</b> According to the format setting <b>Description</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Bild(er)
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Content:</b> A list of all image urls seprated with semicolon. Variation images are prioritizied over item images.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                360 Grad
-            </td>
-            <td>
-                <b>Limitation:</b> max. 255 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » 360 degrees</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Bestand
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Ausgabe:</b> The <b>net stock</b> of the variation. If a variation is not limited to its net stock, b>999</b> übertragen.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Farbe
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of an attribute, with an attribute link for <b>Amazon</b> to  <b>Color</b>. As an alternative the value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Farbe</b> can also be used.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Farbe Suche I
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Colour search I</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Farbe Suche II
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Colour search II</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Hersteller Farbbezeichnung
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Manufacturer colour name</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                GG Größengang
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » GG size range</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Größe
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Limitation:</b> max. 20 characters<br>
-                <b>Content:</b> The value of an attribute, with an attribute link for <b>Amazon</b> to  <b>Size</b>. As an alternative the value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Size</b> can also be used.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Marke
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The <b>name of the manufacturer</b> of the item. The <b>external name</b> within <b>Settings » Items » Manufacturer</b> will be preferred if existing.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Saison
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Season</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                EAN
-            </td>
-            <td>
-                <b>Content:</b> According to the format setting <b>Barcode</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Währung
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Content:</b> The ISO code of the <b>currency</b> of the price.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Versandkosten
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Content:</b> According to the format setting <b>shipping costs</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Info Versandkosten
-            </td>
-            <td>
-                <b>Limitation:</b> max. 255 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Shipping costs info</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Preis (UVP)
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Limitation:</b> max. 6 pre-decimals<br>
-                <b>Content:</b> The <b>sales price</b> of the variation. If the <b>RRP</b> is activated in the format setting and is higher than the <b>sales price</b>, the <b>RRP</b> will be exported.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                reduzierter Preis
-            </td>
-            <td>
-                <b>Limitation:</b> max. 6 pre-decimals<br>
-                <b>Content:</b> If the <b>RRP</b> is activated in the format setting and is higher than the <b>sales price</b>, the <b>sales price</b> will be exported.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Grundpreis
-            </td>
-            <td>
-                <b>Content:</b> The base price based on the column <b>Grundpreis Einheit</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Grundpreis Einheit
-            </td>
-            <td>
-                <b>Content:</b> The content and unit on which the <b>base price</b> is based.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Kategorien
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Content:</b> The names of the categories that are linked to the variation separeted with semicolon.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Link
-            </td>
-            <td>
-                <b>Required</b><br>
-                <b>Content:</b> The <b>URL path</b> of the item depending on the chosen <b>client</b> in the format settings.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Anzahl Verkäufe
-            </td>
-            <td>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Number of sales</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Schuhbreite
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> breit, normal, schmal<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Shoe width</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Absatzhöhe
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> bis 3 cm, 3-5 cm, 5-8 cm, 8-10 cm, über 10 cm<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Heel height</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Absatzform
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> Block, Keil, Pfennig, Trichter, flach<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Heel shape</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Schuhspitze
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> Karree, offen, rund, spitz<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » shoe point</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Obermaterial
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> Fell, Fettleder, Glattleder, Kunststoff/Synthetik, Lack, Lederimitat, Ledermix, Materialmix, Narbenleder, Rauhleder, Textil<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Upper material</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Schaftweite
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> normal, schmal, verstellbar, weit<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Shaft width</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Schafthöhe
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> unter 5cm, 5-15cm, 15-25cm, 25-35cm, 35-45cm<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Shaft height</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Materialzusammensetzung
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Material composition</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Besonderheiten
-            </td>
-            <td>
-                <b>Limitation:</b> max. 255 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Particularities</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Verschluss
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> Reißverschluss, Schnürung<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Closure</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Innenmaterial
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Inner material</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Sohle
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Allowed values:</b> Kunststoff, Leder<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Sole</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Größenhinweis
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Size note</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Wechselfussbett
-            </td>
-            <td>
-                <b>Allowed values:</b> 0, 1<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Removable insoles</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Wasserdicht
-            </td>
-            <td>
-                <b>Allowed values:</b> 0, 1<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Watertight</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Promotion
-            </td>
-            <td>
-                <b>Allowed values:</b> 0, 1<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Promotion</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                URL Video
-            </td>
-            <td>
-                <b>Limitation:</b> max. 255 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » URL video</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                Steuersatz
-            </td>
-            <td>
-                <b>Limitation:</b> max. 4 pre-decimals<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » Tax rate</b>.
-            </td>        
-        </tr>
-        <tr>
-            <td>
-                ANWR schuh Trend
-            </td>
-            <td>
-                <b>Limitation:</b> max. 50 characters<br>
-                <b>Content:</b> The value of a property of the type <b>Text</b> or <b>Selection</b>, that is linked to <b>schuhe.de » ANWR schuh Trend</b>.
-            </td>        
-        </tr>
-</table>
+| **Column name**     | **Explanation** |
+| :---                       | :--- |
+| Identnummer                | **Required**<br/> The variation ID of the variation. |
+| Artikelnummer              | **Required**<br/> **Limitation**: max. 50 characters<br/> The Variation No. within the **Basic settings** section in the **Item » Edit item » Open item » Open variation » Settings** menu. |
+| Herstellerartikelnummer    | **Required**<br/> **Limitation**: max. 50 characters<br/> The model within the **Basic settings** section in the **Item » Edit item » Open item » Open variation » Settings** menu. |
+| Artikelname                | **Required**<br/> **Limitation**: max. 255 characters<br/> According to the format setting **Item name**. |
+| Bild(er)                   | **Required**<br/> A list of all image URLs separated with semicolon. Variation images are prioritised over item images. |
+| 360 Grad                   | **Limitation**: max. 255 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » 360 degrees**. |
+| Bestand                    | **Required**<br/> The net stock of the variation. If a variation is not limited to its net stock, 999 is transferred. |
+| Farbe                      | **Required**<br/> **Limitation**: max. 50 characters<br/> The value of an attribute with an attribute link for Amazon to **Color**. As an alternative, you can use the value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Colour**. |
+| Farbe Suche I              | **Limitation**: max. 50 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Colour search I**. |
+| Farbe Suche II             | **Limitation**: max. 50 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Colour search II**. |
+| Hersteller Farbbezeichnung | **Limitation**: max. 50 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Manufacturer colour name**. |
+| GG Größengang              | **Limitation**: max. 50 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » GG size range**. |
+| Größe                      | **Required**<br/> **Limitation**: max. 20 characters<br/> The value of an attribute with an attribute link for Amazon to **Size**. As an alternative, you can use the value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Size**. |
+| Marke                      | **Required**<br/> **Limitation**: max. 50 characters<br/> The name of the manufacturer of the item. The **External name** within **Settings » Items » Manufacturer** is preferred if existing. |
+| Saison                     | **Limitation**: max. 50 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Season**. |
+| EAN                        | According to the format setting **Barcode**. |
+| Währung                    | **Required**<br/> The ISO code of the currency of the price. |
+| Versandkosten              | **Required**<br/> According to the format setting **Shipping costs**. |
+| Info Versandkosten         | **Limitation**: max. 255 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Shipping costs info**. |
+| Preis (UVP)                | **Required**<br/> **Limitation**: max. 6 pre-decimals<br/> The sales price of the variation. If the RRP is activated in the format settings and is higher than the sales price, the RRP is exported. |
+| reduzierter Preis          | **Limitation**: max. 6 pre-decimals<br/>  If the RRP is activated in the in the format settings and is higher than the sales price, the sales price is exported. |
+| Grundpreis                 | The base price based on the column Grundpreis Einheit. |
+| Grundpreis Einheit         | The content and unit on which the base price is based. |
+| Kategorien                 | **Required**<br/> The names of the categories that are linked to the variation, separated by semi-colon. |
+| Link                       | **Required**<br/> The URL path of the item depending on the chosen client in the format settings. |
+| Anzahl Verkäufe            | The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Number of sales**. |
+| Schuhbreite                | **Limitation**: max. 50 characters<br/> Allowed values: breit, normal, schmal<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Shoe width**. |
+| Absatzhöhe                 | **Limitation**: max. 50 characters<br/> Allowed values: bis 3 cm, 3-5 cm, 5-8 cm, 8-10 cm, über 10 cm<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Heel height**. |
+| Absatzform                 | **Limitation**: max. 50 characters<br/> Allowed values: Block, Keil, Pfennig, Trichter, flach<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Heel shape**. |
+| Schuhspitze                | **Limitation**: max. 50 characters<br/> Allowed values: Karree, offen, rund, spitz<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Shoe point**. |
+| Obermaterial               | **Limitation**: max. 50 characters<br/> Allowed values: Fell, Fettleder, Glattleder, Kunststoff/Synthetik, Lack, Lederimitat, Ledermix, Materialmix, Narbenleder, Rauhleder, Textil<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Upper material**. |
+| Schaftweite                | **Limitation**: max. 50 characters<br/> Allowed values: normal, schmal, verstellbar, weit<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Shaft width**. |
+| Schafthöhe                 | **Limitation**: max. 50 characters<br/> Allowed values: unter 5 cm, 5-15 cm, 15-25 cm, 25-35 cm, 35-45 cm<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Shaft height**. |
+| Materialzusammensetzung    | **Limitation**: max. 50 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Material composition**. |
+| Besonderheiten             | **Limitation**: max. 255 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Particularities**. |
+| Verschluss                 | **Limitation**: max. 50 characters<br/> Allowed values: Reißverschluss, Schnürung<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Closure**. |
+| Innenmaterial              | **Limitation**: max. 50 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Inner material**. |
+| Sohle                      | **Limitation**: max. 50 characters<br/> Allowed values: Kunststoff, Leder<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Sole**. |
+| Größenhinweis              | **Limitation**: max. 50 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Size note**. |
+| Wechselfußbett             | **Limitation**: 0.1<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Removable insoles**. |
+| Wasserdicht                | **Limitation**: 0.1<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Watertight**. |
+| Promotion                  | **Limitation**: 0.1<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Promotion**. |
+| URL Video                  | **Limitation**: max. 255 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » URL video**. |
+| Steuersatz                 | **Limitation**: max. 4 pre-decimals<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » Tax rate**. |
+| ANWR schuh Trend           | **Limitation**: max. 50 characters<br/> The value of a property of the type **Text** or **Selection** that is linked to **schuhe.de » ANWR schuh Trend**. |
 
 ## 4 License
 
