@@ -2,7 +2,7 @@
   "name": "ElasticExportSchuheDE",
   "namespace": "ElasticExportSchuheDE",
   "type": "export",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3, 19 November 2007",
   "pluginIcon": "icon_plugin_md.png",
   "price": 0.00,
@@ -16,7 +16,9 @@
     "de":"schuhe.de",
     "en":"schuhe.de"
   },
-  "require": ["ElasticExport"],
+  "require": {
+    "ElasticExport": ">= 1.6.6"
+  },
   "author": "plentymarkets GmbH",
   "authorIcon": "icon_author_xs.png",
   "serviceProvider": "ElasticExportSchuheDE\\ElasticExportSchuheDEServiceProvider"

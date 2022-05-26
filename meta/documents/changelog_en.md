@@ -1,5 +1,10 @@
 # Release Notes for Elastic Export Schuhe.de
 
+## v1.1.5 (2022-05-26)
+
+### Changed
+- UPDATE - Additional updates to ensure compatibility with PHP 8.
+
 ## v1.1.4 (2018-07-26)
 
 ### Changed

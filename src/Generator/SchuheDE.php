@@ -181,7 +181,7 @@ class SchuheDE extends CSVPluginGenerator
 						break;
 					}
 
-					if(is_array($resultList['documents']) && count($resultList['documents']) > 0)
+					if(is_array($resultList['documents']) && count($resultList['documents'] ?? []) > 0)
 					{
 						if($this->filtrationService->filter($variation))
 						{
@@ -248,8 +248,8 @@ class SchuheDE extends CSVPluginGenerator
 			'Info Versandkosten'            => $this->getProperty($variationAttributes, $itemPropertyList, 'shipping_costs_info'),
 			'Preis (UVP)'                   => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['recommendedRetailPrice'] : $priceList['price'],
 			'reduzierter Preis'             => $priceList['recommendedRetailPrice'] > $priceList['price'] ? $priceList['price'] : '',
-            'Grundpreis'                    => count($basePriceData) ? number_format((float)$basePriceData['price'], 2, '.','') : '',
-            'Grundpreis Einheit'            => count($basePriceData) ? 'pro '.$basePriceData['lot'].' '.$basePriceData['unitLongName'] : '',
+            'Grundpreis'                    => count($basePriceData ?? []) ? number_format((float)$basePriceData['price'], 2, '.','') : '',
+            'Grundpreis Einheit'            => count($basePriceData ?? []) ? 'pro '.$basePriceData['lot'].' '.$basePriceData['unitLongName'] : '',
 			'Kategorien'                    => $this->getCategories($variation, $settings),
 			'Link'                          => $this->elasticExportCoreHelper->getMutatedUrl($variation, $settings),
 			'Anzahl Verkäufe'               => $this->getProperty($variationAttributes, $itemPropertyList, 'sold_items'),
@@ -333,7 +333,7 @@ class SchuheDE extends CSVPluginGenerator
 
         foreach($variationAttributes as $key => $value)
         {
-            if(is_array($value) && count($value))
+            if(is_array($value) && count($value ?? []))
             {
                 $list[$key] = implode(', ', $value);
             }
@@ -374,7 +374,7 @@ class SchuheDE extends CSVPluginGenerator
     {
         $attributes = (string) $itemId;
 
-        if(count($variationAttributes))
+        if(count($variationAttributes ?? []))
         {
             $attributes .= implode(';', $variationAttributes);
         }
@@ -393,7 +393,7 @@ class SchuheDE extends CSVPluginGenerator
     {
         $categoryList = [];
 
-        if(is_array($variation['data']['ids']['categories']['branches']) && count($variation['data']['ids']['categories']['branches']) > 0)
+        if(is_array($variation['data']['ids']['categories']['branches']) && count($variation['data']['ids']['categories']['branches'] ?? []) > 0)
         {
 			// go though the list of the category details
 			foreach($variation['data']['ids']['categories']['branches'] as $categoryId)
@@ -426,7 +426,7 @@ class SchuheDE extends CSVPluginGenerator
     {
         $list = $this->elasticExportCoreHelper->getImageList($variation, $settings, $imageType);
 
-        if(count($list))
+        if(count($list ?? []))
         {
             return implode($separator, $list);
         }
