@@ -11,7 +11,9 @@
     "de": "Die Integration des Datenformats SchuheDE-Plugin ermöglicht die Artikeldatenübertragung zum Preisportal schuhe.de über den elastischen Export.",
     "en": "The integration of the data format SchuheDE-Plugin enables the transfer of item data to the price search engine schuhe.de via the elastic export."
   },
-  "categories": ["3523"],
+  "categories": [
+    "3880"
+  ],
   "marketplaceName": {
     "de":"schuhe.de",
     "en":"schuhe.de"
